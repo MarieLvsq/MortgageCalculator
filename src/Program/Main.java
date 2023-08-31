@@ -16,12 +16,16 @@ public class Main {
 		
 		System.out.print("Annual Interest:");
 		double monthlyInterest = scanner.nextDouble()/MONTHS_IN_YEAR/PERCENT;
+		
 		System.out.print("Period (Years):");
 		int periodMonths = scanner.nextInt() *MONTHS_IN_YEAR;
+		
 		double interestRatePow = Math.pow((1+monthlyInterest), periodMonths);
 		double resultDouble = principal * ((monthlyInterest*interestRatePow)/(interestRatePow-1));
+		
 		String mortgage = NumberFormat.getCurrencyInstance().format(resultDouble);
 		System.out.println("Mortgage:" + mortgage);
+		
 	}
 
 }
