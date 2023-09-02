@@ -11,6 +11,7 @@ public class Main {
 		final byte PERCENT = 100;
 		Scanner scanner = new Scanner(System.in);
 
+		//Principal
 		System.out.print("Principal (1K€ - 1M€):");
 		int principal = scanner.nextInt();
 
@@ -21,8 +22,10 @@ public class Main {
 				break;
 		}
 
+		//Annual Interest
 		System.out.print("Annual Interest Rate:");
 		double annualInterest = scanner.nextDouble();
+		
 		while (annualInterest == 0 || annualInterest > 30) {
 			System.out.print("Enter a number greater than 0 and less than or equal to 30 :");
 			annualInterest = scanner.nextDouble();
@@ -30,11 +33,12 @@ public class Main {
 				break;
 			}
 		}
-
 		double monthlyInterest = annualInterest / MONTHS_IN_YEAR / PERCENT;
 
+		// Period
 		System.out.print("Period (Years):");
 		int periodYears = scanner.nextInt();
+		
 		while (periodYears < 1 || periodYears > 30) {
 			System.out.println("Enter a number between 1 and 30 :");
 			periodYears = scanner.nextInt();
@@ -42,12 +46,13 @@ public class Main {
 				break;
 			}
 		}
-
 		int periodMonths = periodYears * MONTHS_IN_YEAR;
 
+		//Mortgage calculation
 		double interestRatePow = Math.pow((1 + monthlyInterest), periodMonths);
 		double resultDouble = principal * ((monthlyInterest * interestRatePow) / (interestRatePow - 1));
 
+		//Formatting mortgage result
 		String mortgage = NumberFormat.getCurrencyInstance().format(resultDouble);
 		System.out.println("Mortgage:" + mortgage);
 
