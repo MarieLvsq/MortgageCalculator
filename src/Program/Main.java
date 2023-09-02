@@ -7,11 +7,9 @@ public class Main {
 
 	public static void main(String[] args) {
 
-		final byte MONTHS_IN_YEAR = 12;
-		final byte PERCENT = 100;
 		Scanner scanner = new Scanner(System.in);
 
-		//Principal
+		// Principal
 		System.out.print("Principal (1K€ - 1M€):");
 		int principal = scanner.nextInt();
 
@@ -22,10 +20,10 @@ public class Main {
 				break;
 		}
 
-		//Annual Interest
+		// Annual Interest
 		System.out.print("Annual Interest Rate:");
 		double annualInterest = scanner.nextDouble();
-		
+
 		while (annualInterest == 0 || annualInterest > 30) {
 			System.out.print("Enter a number greater than 0 and less than or equal to 30 :");
 			annualInterest = scanner.nextDouble();
@@ -33,29 +31,40 @@ public class Main {
 				break;
 			}
 		}
-		double monthlyInterest = annualInterest / MONTHS_IN_YEAR / PERCENT;
 
 		// Period
 		System.out.print("Period (Years):");
-		int periodYears = scanner.nextInt();
-		
+		byte periodYears = scanner.nextByte();
+
 		while (periodYears < 1 || periodYears > 30) {
 			System.out.println("Enter a number between 1 and 30 :");
-			periodYears = scanner.nextInt();
+			periodYears = scanner.nextByte();
 			if (periodYears >= 1 && periodYears <= 30) {
 				break;
 			}
 		}
-		int periodMonths = periodYears * MONTHS_IN_YEAR;
 
-		//Mortgage calculation
+		double mortgage = calculateMortgage(principal, annualInterest, periodYears);
+		
+		// Formatting mortgage result
+		String mortgageFormatted = NumberFormat.getCurrencyInstance().format(mortgage);
+		System.out.println("Mortgage:" + mortgageFormatted);
+
+	}
+
+	public static double calculateMortgage(int principal, double annualInterest, byte years) {
+
+		final byte MONTHS_IN_YEAR = 12;
+		final byte PERCENT = 100;
+
+		short periodMonths = (short) (years * MONTHS_IN_YEAR);
+		double monthlyInterest = annualInterest / MONTHS_IN_YEAR / PERCENT;
+
+		// Mortgage calculation
 		double interestRatePow = Math.pow((1 + monthlyInterest), periodMonths);
-		double resultDouble = principal * ((monthlyInterest * interestRatePow) / (interestRatePow - 1));
+		double mortgage = principal * ((monthlyInterest * interestRatePow) / (interestRatePow - 1));
 
-		//Formatting mortgage result
-		String mortgage = NumberFormat.getCurrencyInstance().format(resultDouble);
-		System.out.println("Mortgage:" + mortgage);
-
+		return mortgage;
 	}
 
 }
